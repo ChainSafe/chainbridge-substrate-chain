@@ -13,12 +13,12 @@ build = 'build.rs'
 edition = '2018'
 homepage = 'https://substrate.dev'
 license = 'Unlicense'
-name = 'node-template'
-repository = 'https://github.com/paritytech/substrate/'
+name = 'chainbridge-substrate-chain'
+repository = 'https://github.com/ChainSafe/chainbridge-substrate-chain'
 version = '2.0.0-alpha.3'
 
 [[bin]]
-name = 'node-template'
+name = 'chainbridge-substrate-chain'
 
 [dependencies]
 futures = '0.3.1'

@@ -14,9 +14,9 @@ before_install:
 
 jobs:
   include:
-    - stage: Test and build
-      name: Run runtime tests
-      script: RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=runtime-test travis_wait 180 ./scripts/ci.sh
+#    - stage: Test and build
+#      name: Run runtime tests
+#      script: RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=runtime-test travis_wait 180 ./scripts/ci.sh
     - name: Build (WASM and native)
       script:
         - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
