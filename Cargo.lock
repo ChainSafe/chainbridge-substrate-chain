@@ -442,7 +442,7 @@ dependencies = [
 [[package]]
 name = "chainbridge"
 version = "0.0.1"
-source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#724f35a2e6dcfa391b4a956ed9a8eb34db9ac3cb"
+source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#87b4ca5bc6f1e37644dc22edfef272bb7914bbc4"
 dependencies = [
  "frame-support 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "frame-system 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
@@ -776,7 +776,7 @@ dependencies = [
 [[package]]
 name = "example-pallet"
 version = "0.0.1"
-source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#724f35a2e6dcfa391b4a956ed9a8eb34db9ac3cb"
+source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#87b4ca5bc6f1e37644dc22edfef272bb7914bbc4"
 dependencies = [
  "chainbridge 0.0.1 (git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3)",
  "frame-support 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
