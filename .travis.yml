@@ -1,0 +1,51 @@
+language: rust
+
+before_cache:
+  - chmod -R a+r $HOME/.cargo
+
+cache: cargo
+
+env:
+  global:
+    - RUST_BACKTRACE=1
+
+before_install:
+  - df -h
+
+jobs:
+  include:
+    - stage: Test and build
+      name: Run runtime tests
+      script: RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=runtime-test travis_wait 180 ./scripts/ci.sh
+    - name: Build (WASM and native)
+      script:
+        - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
+        - mkdir deploy && cp target/release/node-template deploy
+      deploy:
+        provider: s3
+        access_key_id: $S3_KEY_ID
+        secret_access_key: $S3_ACCESS_KEY
+        bucket: centchain
+        endpoint: https://nyc3.digitaloceanspaces.com
+        local_dir: deploy
+        upload_dir: chainbridge-substrate-chain/$TRAVIS_COMMIT-$TRAVIS_BUILD_ID
+        acl: public_read
+        skip_cleanup: true
+        on:
+          repo: ChainSafe/chainsafe-substrate-chain
+          all_branches: true
+
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
+      - gcc
+      - binutils-dev
+      - libiberty-dev
+
+after_script:
+  - df -h
+
