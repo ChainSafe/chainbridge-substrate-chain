@@ -67,6 +67,10 @@ impl Alternative {
 						get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
 						get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
 					],
+					vec![
+						get_account_id_from_seed::<sr25519::Public>("Alice"),
+						get_account_id_from_seed::<sr25519::Public>("Bob"),
+					],
 					true,
 				),
 				vec![],
@@ -98,6 +102,10 @@ impl Alternative {
 						get_account_id_from_seed::<sr25519::Public>("Eve//stash"),
 						get_account_id_from_seed::<sr25519::Public>("Ferdie//stash"),
 					],
+					vec![
+						get_account_id_from_seed::<sr25519::Public>("Alice"),
+						get_account_id_from_seed::<sr25519::Public>("Bob"),
+					],
 					true,
 				),
 				vec![],
@@ -121,6 +129,7 @@ impl Alternative {
 fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 	root_key: AccountId,
 	endowed_accounts: Vec<AccountId>,
+	initial_relayers: Vec<AccountId>,
 	_enable_println: bool) -> GenesisConfig {
 	GenesisConfig {
 		system: Some(SystemConfig {
@@ -140,10 +149,10 @@ fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 			key: root_key.clone(),
 		}),
 		chainbridge: Some(BridgeConfig {
-			validators: endowed_accounts.iter().map(|x| (x.clone())).collect(),
-			endowed: root_key,
-			validator_threshold: 2,
-		})
+			chain_id: 1,
+			relayers: initial_relayers,
+			relayer_threshold: 2,
+		}),
 	}
 }
 

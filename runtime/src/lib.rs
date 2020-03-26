@@ -37,9 +37,6 @@ pub use frame_support::{
 	weights::Weight,
 };
 
-/// Importing a template pallet
-pub use template;
-
 /// An index to a block.
 pub type BlockNumber = u32;
 
@@ -221,15 +218,15 @@ impl sudo::Trait for Runtime {
 	type Call = Call;
 }
 
-/// Used for the module template in `./template.rs`
-impl template::Trait for Runtime {
-	type Event = Event;
-}
-
 impl chainbridge::Trait for Runtime {
 	type Event = Event;
 	type Currency = balances::Module<Runtime>;
 	type Proposal = Call;
+}
+
+impl example::Trait for Runtime {
+	type Event = Event;
+	type BridgeOrigin = chainbridge::EnsureBridge<Runtime>;
 }
 
 construct_runtime!(
@@ -247,8 +244,7 @@ construct_runtime!(
 		TransactionPayment: transaction_payment::{Module, Storage},
 		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
 		Bridge: chainbridge::{Module, Call, Config<T>, Storage, Event<T>},
-		// Used for the module template in `./template.rs`
-		TemplateModule: template::{Module, Call, Storage, Event<T>},
+		Example: example::{Module, Call, Event<T>},
 	}
 );
 

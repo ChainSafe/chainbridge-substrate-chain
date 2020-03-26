@@ -442,7 +442,7 @@ dependencies = [
 [[package]]
 name = "chainbridge"
 version = "0.0.1"
-source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#da4315f80fca17608045e000bfb00ea75aad008e"
+source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#724f35a2e6dcfa391b4a956ed9a8eb34db9ac3cb"
 dependencies = [
  "frame-support 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "frame-system 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
@@ -743,6 +743,23 @@ version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "example-pallet"
+version = "0.0.1"
+source = "git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3#724f35a2e6dcfa391b4a956ed9a8eb34db9ac3cb"
+dependencies = [
+ "chainbridge 0.0.1 (git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3)",
+ "frame-support 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
+ "frame-system 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
+ "parity-scale-codec 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sp-core 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
+ "sp-io 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
+ "sp-runtime 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
+ "sp-std 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
+ "substrate-wasm-builder-runner 1.0.5 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
 ]
 
 [[package]]
@@ -2374,6 +2391,7 @@ name = "node-template-runtime"
 version = "2.0.0-alpha.3"
 dependencies = [
  "chainbridge 0.0.1 (git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3)",
+ "example-pallet 0.0.1 (git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3)",
  "frame-executive 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "frame-support 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "frame-system 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
@@ -2382,7 +2400,6 @@ dependencies = [
  "pallet-grandpa 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "pallet-randomness-collective-flip 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "pallet-sudo 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
- "pallet-template 2.0.0-alpha.3",
  "pallet-timestamp 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "pallet-transaction-payment 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "parity-scale-codec 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -2616,19 +2633,6 @@ dependencies = [
  "sp-io 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "sp-runtime 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
  "sp-std 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
-]
-
-[[package]]
-name = "pallet-template"
-version = "2.0.0-alpha.3"
-dependencies = [
- "frame-support 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
- "frame-system 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
- "parity-scale-codec 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "safe-mix 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "sp-core 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
- "sp-io 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
- "sp-runtime 2.0.0-alpha.3 (git+https://github.com/paritytech/substrate.git?rev=013c1ee167354a08283fb69915fda56a62fee943)",
 ]
 
 [[package]]
@@ -5426,7 +5430,7 @@ name = "twox-hash"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "rand 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.3.23 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -5928,6 +5932,7 @@ dependencies = [
 "checksum env_logger 0.7.1 (registry+https://github.com/rust-lang/crates.io-index)" = "44533bbbb3bb3c1fa17d9f2e4e38bbbaf8396ba82193c4cb1b6445d711445d36"
 "checksum environmental 1.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "516aa8d7a71cb00a1c4146f0798549b93d083d4f189b3ced8f3de6b8f11ee6c4"
 "checksum erased-serde 0.3.10 (registry+https://github.com/rust-lang/crates.io-index)" = "cd7d80305c9bd8cd78e3c753eb9fb110f83621e5211f1a3afffcc812b104daf9"
+"checksum example-pallet 0.0.1 (git+https://github.com/ChainSafe/chainbridge-substrate?branch=david/alpha.3)" = "<none>"
 "checksum exit-future 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e43f2f1833d64e33f15592464d6fdd70f349dda7b1a53088eb83cd94014008c5"
 "checksum failure 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "b8529c2421efa3066a5cbd8063d2244603824daccb6936b079010bb2aa89464b"
 "checksum failure_derive 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "030a733c8287d6213886dd487564ff5c8f6aae10278b3588ed177f9d18f8d231"
