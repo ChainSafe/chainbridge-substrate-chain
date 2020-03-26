@@ -6,7 +6,8 @@ use node_template_runtime::{
 use sp_consensus_aura::sr25519::{AuthorityId as AuraId};
 use grandpa_primitives::{AuthorityId as GrandpaId};
 use sc_service;
-use sp_runtime::traits::{Verify, IdentifyAccount};
+use sp_runtime::traits::{Verify, IdentifyAccount, AccountIdConversion};
+use sp_runtime::ModuleId;
 
 // Note this is the URL for the telemetry server
 //const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
@@ -66,6 +67,7 @@ impl Alternative {
 						get_account_id_from_seed::<sr25519::Public>("Bob"),
 						get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
 						get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
+						ModuleId(*b"cb/bridg").into_account(),
 					],
 					vec![
 						get_account_id_from_seed::<sr25519::Public>("Alice"),
@@ -101,6 +103,7 @@ impl Alternative {
 						get_account_id_from_seed::<sr25519::Public>("Dave//stash"),
 						get_account_id_from_seed::<sr25519::Public>("Eve//stash"),
 						get_account_id_from_seed::<sr25519::Public>("Ferdie//stash"),
+						ModuleId(*b"cb/bridg").into_account(),
 					],
 					vec![
 						get_account_id_from_seed::<sr25519::Public>("Alice"),

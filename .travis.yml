@@ -32,7 +32,7 @@ jobs:
         acl: public_read
         skip_cleanup: true
         on:
-          repo: ChainSafe/chainsafe-substrate-chain
+          repo: ChainSafe/chainbridge-substrate-chain
           all_branches: true
 
 addons:
