@@ -12,7 +12,7 @@ fn main() -> sc_cli::Result<()> {
 		name: "Substrate Node",
 		commit: env!("VERGEN_SHA_SHORT"),
 		version: env!("CARGO_PKG_VERSION"),
-		executable_name: "example-chain",
+		executable_name: "chainbridge-substrate-chain",
 		author: "David Ansermino (ChainSafe)",
 		description: "Example substrate chain with bridge functionality",
 		support_url: "n/a",
