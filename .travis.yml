@@ -20,7 +20,7 @@ jobs:
     - name: Build (WASM and native)
       script:
         - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
-        - mkdir deploy && cp target/release/node-template deploy
+        - mkdir deploy && cp target/release/chainbridge-substrate-chain ./deploy
       deploy:
         provider: s3
         access_key_id: $S3_KEY_ID
