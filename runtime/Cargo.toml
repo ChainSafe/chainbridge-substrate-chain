@@ -197,10 +197,10 @@ version = '2.0.0-alpha.3'
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'chainbridge'
-branch = 'david/alpha.3'
+rev = '7143edd471b436004389afd122ae8454544eccf4'
 
 [dependencies.example]
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'example-pallet'
-branch = 'david/alpha.3'
+rev = '7143edd471b436004389afd122ae8454544eccf4'
