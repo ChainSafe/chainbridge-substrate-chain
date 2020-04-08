@@ -1,7 +1,7 @@
 use sp_core::{Pair, Public, sr25519};
 use node_template_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
-	SudoConfig, SystemConfig, BridgeConfig, WASM_BINARY, Signature
+	SudoConfig, SystemConfig, WASM_BINARY, Signature
 };
 use sp_consensus_aura::sr25519::{AuthorityId as AuraId};
 use grandpa_primitives::{AuthorityId as GrandpaId};
@@ -69,10 +69,6 @@ impl Alternative {
 						get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
 						ModuleId(*b"cb/bridg").into_account(),
 					],
-					vec![
-						get_account_id_from_seed::<sr25519::Public>("Alice"),
-						get_account_id_from_seed::<sr25519::Public>("Bob"),
-					],
 					true,
 				),
 				vec![],
@@ -105,10 +101,6 @@ impl Alternative {
 						get_account_id_from_seed::<sr25519::Public>("Ferdie//stash"),
 						ModuleId(*b"cb/bridg").into_account(),
 					],
-					vec![
-						get_account_id_from_seed::<sr25519::Public>("Alice"),
-						get_account_id_from_seed::<sr25519::Public>("Bob"),
-					],
 					true,
 				),
 				vec![],
@@ -132,7 +124,6 @@ impl Alternative {
 fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 	root_key: AccountId,
 	endowed_accounts: Vec<AccountId>,
-	initial_relayers: Vec<AccountId>,
 	_enable_println: bool) -> GenesisConfig {
 	GenesisConfig {
 		system: Some(SystemConfig {
@@ -150,11 +141,6 @@ fn testnet_genesis(initial_authorities: Vec<(AuraId, GrandpaId)>,
 		}),
 		sudo: Some(SudoConfig {
 			key: root_key.clone(),
-		}),
-		chainbridge: Some(BridgeConfig {
-			chain_id: 1,
-			relayers: initial_relayers,
-			relayer_threshold: 2,
 		}),
 	}
 }

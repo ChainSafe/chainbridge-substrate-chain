@@ -10,6 +10,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 use sp_std::prelude::*;
 use sp_core::OpaqueMetadata;
+use sp_io::hashing::blake2_128;
 use sp_runtime::{
 	ApplyExtrinsicResult, transaction_validity::TransactionValidity, generic, create_runtime_str,
 	impl_opaque_keys, MultiSignature,
@@ -224,9 +225,16 @@ impl chainbridge::Trait for Runtime {
 	type Proposal = Call;
 }
 
+parameter_types! {
+    pub const HashTokenId: [u8; 16] = blake2_128(b"hash");
+    pub const NativeTokenId: [u8; 16] = blake2_128(b"DAV");
+}
+
 impl example::Trait for Runtime {
 	type Event = Event;
 	type BridgeOrigin = chainbridge::EnsureBridge<Runtime>;
+	type HashTokenId = HashTokenId;
+	type NativeTokenId = NativeTokenId;
 }
 
 construct_runtime!(
@@ -243,7 +251,7 @@ construct_runtime!(
 		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: transaction_payment::{Module, Storage},
 		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
-		Bridge: chainbridge::{Module, Call, Config<T>, Storage, Event<T>},
+		Bridge: chainbridge::{Module, Call, Storage, Event<T>},
 		Example: example::{Module, Call, Event<T>},
 	}
 );
