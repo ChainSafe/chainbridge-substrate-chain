@@ -219,21 +219,26 @@ impl sudo::Trait for Runtime {
 	type Call = Call;
 }
 
+parameter_types! {
+    pub const ChainId: u8 = 1;
+}
+
 impl chainbridge::Trait for Runtime {
 	type Event = Event;
 	type Currency = balances::Module<Runtime>;
 	type Proposal = Call;
+	type ChainId = ChainId;
 }
 
 parameter_types! {
-    pub const HashTokenId: [u8; 16] = blake2_128(b"hash");
-    pub const NativeTokenId: [u8; 16] = blake2_128(b"DAV");
+    pub const HashId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"hash"));
+    pub const NativeTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"DAV"));
 }
 
 impl example::Trait for Runtime {
 	type Event = Event;
 	type BridgeOrigin = chainbridge::EnsureBridge<Runtime>;
-	type HashTokenId = HashTokenId;
+	type HashId = HashId;
 	type NativeTokenId = NativeTokenId;
 }
 
