@@ -232,7 +232,8 @@ impl chainbridge::Trait for Runtime {
 
 parameter_types! {
     pub const HashId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"hash"));
-    pub const NativeTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"DAV"));
+    // Note: Chain ID is 0 indicating this is native to another chain
+    pub const NativeTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(0, &blake2_128(b"DAV"));
 }
 
 impl example::Trait for Runtime {
