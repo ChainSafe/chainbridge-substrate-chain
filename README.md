@@ -12,14 +12,17 @@ You will need to add these definitions to the developer settings:
 
 ```json
 {
+  "bridge::ChainId": "u8",
   "ChainId": "u8",
-  "ResourceId": "[u8; 32]",
+  "ResourceId": "Hash",
   "DepositNonce": "u64",
   "ProposalVotes": {
     "votes_for": "Vec<AccountId>",
     "votes_against": "Vec<AccountId>",
-    "status": "u8"
+    "status": "enum"
   },
+  "TokenId": "U256",
   "Address": "AccountId"
 }
 ```
+
