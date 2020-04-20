@@ -234,6 +234,13 @@ parameter_types! {
     pub const HashId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"hash"));
     // Note: Chain ID is 0 indicating this is native to another chain
     pub const NativeTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(0, &blake2_128(b"DAV"));
+
+    pub const NFTTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"NFT"));
+}
+
+impl erc721::Trait for Runtime {
+	type Event = Event;
+	type Identifier = NFTTokenId;
 }
 
 impl example::Trait for Runtime {
@@ -241,6 +248,7 @@ impl example::Trait for Runtime {
 	type BridgeOrigin = chainbridge::EnsureBridge<Runtime>;
 	type HashId = HashId;
 	type NativeTokenId = NativeTokenId;
+	type Erc721Id = NFTTokenId;
 }
 
 construct_runtime!(
@@ -259,6 +267,7 @@ construct_runtime!(
 		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
 		Bridge: chainbridge::{Module, Call, Storage, Event<T>},
 		Example: example::{Module, Call, Event<T>},
+		Erc721: erc721::{Module, Call, Storage, Event<T>},
 	}
 );
 
