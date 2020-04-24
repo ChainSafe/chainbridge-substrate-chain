@@ -193,9 +193,9 @@ parameter_types! {
 impl balances::Trait for Runtime {
 	/// The type for recording an account's balance.
 	type Balance = Balance;
+	type DustRemoval = ();
 	/// The ubiquitous event type.
 	type Event = Event;
-	type DustRemoval = ();
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
 }
@@ -225,7 +225,6 @@ parameter_types! {
 
 impl chainbridge::Trait for Runtime {
 	type Event = Event;
-	type Currency = balances::Module<Runtime>;
 	type Proposal = Call;
 	type ChainId = ChainId;
 }
@@ -246,6 +245,7 @@ impl erc721::Trait for Runtime {
 impl example::Trait for Runtime {
 	type Event = Event;
 	type BridgeOrigin = chainbridge::EnsureBridge<Runtime>;
+	type Currency = balances::Module<Runtime>;
 	type HashId = HashId;
 	type NativeTokenId = NativeTokenId;
 	type Erc721Id = NFTTokenId;
