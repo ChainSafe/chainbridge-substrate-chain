@@ -265,7 +265,7 @@ construct_runtime!(
 		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: transaction_payment::{Module, Storage},
 		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
-		Bridge: chainbridge::{Module, Call, Storage, Event<T>},
+		ChainBridge: chainbridge::{Module, Call, Storage, Event<T>},
 		Example: example::{Module, Call, Event<T>},
 		Erc721: erc721::{Module, Call, Storage, Event<T>},
 	}
