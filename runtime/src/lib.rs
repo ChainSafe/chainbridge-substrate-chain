@@ -225,6 +225,7 @@ parameter_types! {
 
 impl chainbridge::Trait for Runtime {
 	type Event = Event;
+	type AdminOrigin = system::EnsureRoot<Self::AccountId>;
 	type Proposal = Call;
 	type ChainId = ChainId;
 }
