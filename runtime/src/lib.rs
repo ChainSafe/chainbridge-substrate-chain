@@ -221,6 +221,7 @@ impl sudo::Trait for Runtime {
 
 parameter_types! {
     pub const ChainId: u8 = 1;
+    pub const ProposalLifetime: BlockNumber = 1000;
 }
 
 impl chainbridge::Trait for Runtime {
@@ -228,6 +229,7 @@ impl chainbridge::Trait for Runtime {
 	type AdminOrigin = system::EnsureRoot<Self::AccountId>;
 	type Proposal = Call;
 	type ChainId = ChainId;
+	type ProposalLifetime = ProposalLifetime;
 }
 
 parameter_types! {
