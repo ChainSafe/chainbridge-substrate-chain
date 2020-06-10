@@ -12,30 +12,28 @@ env:
 before_install:
   - df -h
 
-
 jobs:
   include:
-    - name: Build (WASM and native)
+    - stage: "Build"
+      name: Build (WASM and native)
       script:
         - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
-        - mkdir deploy && cp target/release/chainbridge-substrate-chain ./deploy
-      deploy:
-        provider: s3
-        access_key_id: $S3_KEY_ID
-        secret_access_key: $S3_ACCESS_KEY
-        bucket: centchain
-        endpoint: https://nyc3.digitaloceanspaces.com
-        local_dir: deploy
-        upload_dir: chainbridge-substrate-chain/$TRAVIS_COMMIT-$TRAVIS_BUILD_ID
-        acl: public_read
-        skip_cleanup: true
-        on:
-          repo: ChainSafe/chainbridge-substrate-chain
-          all_branches: true
 
-    - name: Build and Deploy Docker
-      if: (NOT type IN (pull_request)) AND (branch = master)
-      script: ./scripts/ci_docker.sh
+    - stage: "Release (Dockerhub/latest)"
+      if: (NOT type IN (pull_request)) AND (branch = master) AND (TRAVIS_TAG == "")
+      deploy:
+        provider: script
+        script: TARGET=default ./scripts/ci_docker.sh
+        on:
+          tags: false
+
+    - stage: "Release (Dockerhub/vx.y.z)"
+      if: (NOT type IN (pull_request)) AND (branch = master) AND (TRAVIS_TAG == "")
+      deploy:
+        provider: script
+        script: TAG=$TRAVIS_TAG TARGET=release ./scripts/ci_docker.sh
+        on:
+          tags: true
 addons:
   apt:
     packages:
