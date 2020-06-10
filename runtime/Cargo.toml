@@ -198,16 +198,16 @@ version = '2.0.0-alpha.3'
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'chainbridge'
-rev = '49435593c2b353b71874b6c911e4261c9c95c71d'
+tag = 'v0.0.1-alpha'
 
 [dependencies.example]
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'example-pallet'
-rev = '49435593c2b353b71874b6c911e4261c9c95c71d'
+tag = 'v0.0.1-alpha'
 
 [dependencies.erc721]
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'example-erc721'
-rev = '49435593c2b353b71874b6c911e4261c9c95c71d'
+tag = 'v0.0.1-alpha'
