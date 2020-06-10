@@ -3,10 +3,23 @@
 GIT_SHORT_COMMIT=`git rev-parse --short HEAD`
 TIMESTAMP=`date -u +%Y%m%d%H%M%S`
 IMAGE_NAME="chainsafe/chainbridge-substrate-chain"
-TAG="${TIMESTAMP}-${GIT_SHORT_COMMIT}"
+TAG=${TAG:-"${TIMESTAMP}-${GIT_SHORT_COMMIT}"}
 
-docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
-docker tag "${IMAGE_NAME}:${TAG}" "${IMAGE_NAME}:latest"
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker push ${IMAGE_NAME}:latest
-docker push ${IMAGE_NAME}:${TAG}
+
+case $TARGET in
+	"default")
+		docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
+    docker tag "${IMAGE_NAME}:${TAG}" "${IMAGE_NAME}:latest"
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    docker push ${IMAGE_NAME}:latest
+    docker push ${IMAGE_NAME}:${TAG}
+		;;
+
+	"release")
+		docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
+    docker tag "${IMAGE_NAME}:${TAG}"
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    docker push ${IMAGE_NAME}:${TAG}
+		;;
+esac
+
