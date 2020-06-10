@@ -20,7 +20,7 @@ jobs:
         - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
 
     - stage: "Release (Dockerhub/latest)"
-      if: (NOT type IN (pull_request)) AND (branch = master) AND (TRAVIS_TAG == "")
+      if: (NOT type IN (pull_request)) AND (branch = master)
       deploy:
         provider: script
         script: TARGET=default ./scripts/ci_docker.sh
@@ -28,7 +28,7 @@ jobs:
           tags: false
 
     - stage: "Release (Dockerhub/vx.y.z)"
-      if: (NOT type IN (pull_request)) AND (branch = master) AND (TRAVIS_TAG == "")
+      if: (NOT type IN (pull_request)) AND (branch = master)
       deploy:
         provider: script
         script: TAG=$TRAVIS_TAG TARGET=release ./scripts/ci_docker.sh
