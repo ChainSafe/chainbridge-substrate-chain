@@ -28,6 +28,7 @@ jobs:
           tags: false
 
     - stage: "Release (Dockerhub/vx.y.z)"
+      if: (NOT type IN (pull_request)) AND (branch = master) AND (TRAVIS_TAG == "")
       deploy:
         provider: script
         script: TAG=$TRAVIS_TAG TARGET=release ./scripts/ci_docker.sh

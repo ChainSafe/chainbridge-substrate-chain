@@ -7,19 +7,19 @@ TAG=${TAG:-"${TIMESTAMP}-${GIT_SHORT_COMMIT}"}
 
 
 case $TARGET in
-	"default")
-		docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
+  "default")
+    docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
     docker tag "${IMAGE_NAME}:${TAG}" "${IMAGE_NAME}:latest"
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     docker push ${IMAGE_NAME}:latest
     docker push ${IMAGE_NAME}:${TAG}
-		;;
+    ;;
 
-	"release")
-		docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
+  "release")
+    docker build $BUILD_ARGS -t ${IMAGE_NAME}:${TAG} .
     docker tag "${IMAGE_NAME}:${TAG}"
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     docker push ${IMAGE_NAME}:${TAG}
-		;;
+    ;;
 esac
 
