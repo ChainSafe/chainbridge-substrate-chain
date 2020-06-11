@@ -18,20 +18,16 @@ jobs:
       name: Build (WASM and native)
       script:
         - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
-
-    - stage: "Release (Dockerhub/latest)"
       deploy:
-        provider: script
-        script: TARGET=default ./scripts/ci_docker.sh
-        on:
-          branch: master
+        - provider: script
+          script: TARGET=default ./scripts/ci_docker.sh
+          on:
+            branch: master
+        - provider: script
+          script: TAG=$TRAVIS_TAG TARGET=release ./scripts/ci_docker.sh
+          on:
+            tags: true
 
-    - stage: "Release (Dockerhub/vx.y.z)"
-      deploy:
-        provider: script
-        script: TAG=$TRAVIS_TAG TARGET=release ./scripts/ci_docker.sh
-        on:
-          tags: true
 addons:
   apt:
     packages:
