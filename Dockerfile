@@ -8,7 +8,7 @@ LABEL maintainer="david@chainsafe.io"
 LABEL description="This is the build stage for the node. Here the binary is created."
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV RUST_TOOLCHAIN=nightly
+ENV RUST_TOOLCHAIN=nightly-2020-03-12
 
 ARG PROFILE=release
 WORKDIR /chainbridge-substrate-chain
