@@ -1,5 +1,5 @@
 language: rust
-rust: nightly-2020-03-12
+rust: nightly-2020-08-16
 
 before_cache:
   - chmod -R a+r $HOME/.cargo
@@ -18,7 +18,7 @@ jobs:
     - stage: "Build"
       name: Build (WASM and native)
       script:
-        - RUST_TOOLCHAIN=nightly-2020-03-12 TARGET=build-client travis_wait 180 ./scripts/ci.sh
+        - RUST_TOOLCHAIN=nightly-2020-08-16 TARGET=build-client travis_wait 180 ./scripts/ci.sh
       deploy:
         - provider: script
           script: TARGET=default ./scripts/ci_docker.sh

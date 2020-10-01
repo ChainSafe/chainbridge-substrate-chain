@@ -5,23 +5,23 @@ homepage = 'https://substrate.dev'
 license = 'Unlicense'
 name = 'node-template-runtime'
 repository = 'https://github.com/paritytech/substrate/'
-version = '2.0.0-alpha.3'
+version = '2.0.0-rc6'
 [build-dependencies.wasm-builder-runner]
 git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-wasm-builder-runner'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '1.0.5'
 
 [features]
 default = ['std']
 std = [
-    'aura/std',
-    'balances/std',
+    'pallet-aura/std',
+    'pallet-balances/std',
     'codec/std',
     'frame-executive/std',
     'frame-support/std',
-    'grandpa/std',
-    'randomness-collective-flip/std',
+    'pallet-grandpa/std',
+    'pallet-randomness-collective-flip/std',
     'serde',
     'sp-api/std',
     'sp-block-builder/std',
@@ -35,179 +35,182 @@ std = [
     'sp-std/std',
     'sp-transaction-pool/std',
     'sp-version/std',
-    'sudo/std',
-    'system/std',
-    'timestamp/std',
-    'transaction-payment/std',
+    'pallet-sudo/std',
+    'frame-system/std',
+    'pallet-timestamp/std',
+    'pallet-transaction-payment/std',
     'chainbridge/std',
     'example/std',
     'erc721/std',
 ]
-[dependencies.aura]
+
+[dependencies]
+smallvec = "1.4.0"
+
+[dependencies.pallet-aura]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-aura'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.balances]
+[dependencies.pallet-balances]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-balances'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.codec]
 default-features = false
 features = ['derive']
 package = 'parity-scale-codec'
-version = '1.0.0'
+version = '1.3.4'
 
 [dependencies.frame-executive]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.frame-support]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.grandpa]
+[dependencies.pallet-grandpa]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-grandpa'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.randomness-collective-flip]
+[dependencies.pallet-randomness-collective-flip]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-randomness-collective-flip'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.serde]
-features = ['derive']
 optional = true
-version = '1.0.101'
+version = '1.0.102'
 
 [dependencies.sp-api]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-block-builder]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-consensus-aura]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sp-core]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-inherents]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-io]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-offchain]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-runtime]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-session]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-std]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-transaction-pool]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-version]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.sudo]
+[dependencies.pallet-sudo]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-sudo'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.system]
+[dependencies.frame-system]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'frame-system'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.timestamp]
+[dependencies.pallet-timestamp]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-timestamp'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
-[dependencies.transaction-payment]
+[dependencies.pallet-transaction-payment]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
 package = 'pallet-transaction-payment'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.chainbridge]
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'chainbridge'
-tag = 'v1.0.0'
+tag = 'v1.1.0'
 
 [dependencies.example]
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'example-pallet'
-tag = 'v1.0.0'
+tag = 'v1.1.0'
 
 [dependencies.erc721]
 default-features = false
 git = 'https://github.com/ChainSafe/chainbridge-substrate'
 package = 'example-erc721'
-tag = 'v1.0.0'
+tag = 'v1.1.0'

@@ -9,33 +9,36 @@
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 use sp_std::prelude::*;
-use sp_core::OpaqueMetadata;
+use sp_core::{OpaqueMetadata, crypto::KeyTypeId};
 use sp_io::hashing::blake2_128;
 use sp_runtime::{
-	ApplyExtrinsicResult, transaction_validity::TransactionValidity, generic, create_runtime_str,
+	ApplyExtrinsicResult, transaction_validity::{TransactionValidity, TransactionSource}, generic, create_runtime_str,
 	impl_opaque_keys, MultiSignature,
 };
 use sp_runtime::traits::{
-	BlakeTwo256, Block as BlockT, IdentityLookup, Verify, ConvertInto, IdentifyAccount
+	BlakeTwo256, Block as BlockT, IdentityLookup, Verify, IdentifyAccount, Saturating, NumberFor
 };
 use sp_api::impl_runtime_apis;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
-use grandpa::AuthorityList as GrandpaAuthorityList;
-use grandpa::fg_primitives;
+use pallet_grandpa::AuthorityList as GrandpaAuthorityList;
+use pallet_grandpa::fg_primitives;
+use pallet_grandpa::AuthorityId as GrandpaId;
 use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
+use smallvec::smallvec;
 
 // A few exports that help ease life for downstream crates.
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
-pub use timestamp::Call as TimestampCall;
-pub use balances::Call as BalancesCall;
+pub use pallet_timestamp::Call as TimestampCall;
+pub use pallet_balances::Call as BalancesCall;
 pub use sp_runtime::{Permill, Perbill};
 pub use frame_support::{
 	StorageValue, construct_runtime, parameter_types,
-	traits::Randomness,
-	weights::Weight,
+	traits::{Randomness, KeyOwnerProofSystem},
+	weights::{Weight, WeightToFeePolynomial, WeightToFeeCoefficient, WeightToFeeCoefficients},
+	weights::constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight, WEIGHT_PER_SECOND}
 };
 
 /// An index to a block.
@@ -96,6 +99,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_version: 1,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
+	transaction_version: 1,
 };
 
 pub const MILLISECS_PER_BLOCK: u64 = 6000;
@@ -116,15 +120,18 @@ pub fn native_version() -> NativeVersion {
 	}
 }
 
+const AVERAGE_ON_INITIALIZE_WEIGHT: Perbill = Perbill::from_percent(10);
 parameter_types! {
 	pub const BlockHashCount: BlockNumber = 250;
 	pub const MaximumBlockWeight: Weight = 1_000_000_000;
 	pub const AvailableBlockRatio: Perbill = Perbill::from_percent(75);
 	pub const MaximumBlockLength: u32 = 5 * 1024 * 1024;
 	pub const Version: RuntimeVersion = VERSION;
+	pub MaximumExtrinsicWeight: Weight = AvailableBlockRatio::get()
+		.saturating_sub(AVERAGE_ON_INITIALIZE_WEIGHT) * MaximumBlockWeight::get();
 }
 
-impl system::Trait for Runtime {
+impl frame_system::Trait for Runtime {
 	/// The identifier used to distinguish between accounts.
 	type AccountId = AccountId;
 	/// The aggregated dispatch type that is available for extrinsics.
@@ -164,33 +171,53 @@ impl system::Trait for Runtime {
 	/// What to do if an account is fully reaped from the system.
 	type OnKilledAccount = ();
 	/// The data to be stored in an account.
-	type AccountData = balances::AccountData<Balance>;
+	type AccountData = pallet_balances::AccountData<Balance>;
+	type BaseCallFilter = ();
+	type DbWeight = RocksDbWeight;
+	type BlockExecutionWeight = BlockExecutionWeight;
+	type ExtrinsicBaseWeight = ExtrinsicBaseWeight;
+	type MaximumExtrinsicWeight = MaximumExtrinsicWeight;
+	type SystemWeightInfo = ();
 }
 
-impl aura::Trait for Runtime {
+impl pallet_aura::Trait for Runtime {
 	type AuthorityId = AuraId;
 }
 
-impl grandpa::Trait for Runtime {
+impl pallet_grandpa::Trait for Runtime {
 	type Event = Event;
+	type Call = Call;
+
+	type KeyOwnerProofSystem = ();
+
+	type KeyOwnerProof =
+	<Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(KeyTypeId, GrandpaId)>>::Proof;
+
+	type KeyOwnerIdentification = <Self::KeyOwnerProofSystem as KeyOwnerProofSystem<(
+		KeyTypeId,
+		GrandpaId,
+	)>>::IdentificationTuple;
+
+	type HandleEquivocation = ();
 }
 
 parameter_types! {
 	pub const MinimumPeriod: u64 = SLOT_DURATION / 2;
 }
 
-impl timestamp::Trait for Runtime {
+impl pallet_timestamp::Trait for Runtime {
 	/// A timestamp: milliseconds since the unix epoch.
 	type Moment = u64;
 	type OnTimestampSet = Aura;
 	type MinimumPeriod = MinimumPeriod;
+	type WeightInfo = ();
 }
 
 parameter_types! {
 	pub const ExistentialDeposit: u128 = 500;
 }
 
-impl balances::Trait for Runtime {
+impl pallet_balances::Trait for Runtime {
 	/// The type for recording an account's balance.
 	type Balance = Balance;
 	type DustRemoval = ();
@@ -198,23 +225,36 @@ impl balances::Trait for Runtime {
 	type Event = Event;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
+	type WeightInfo = ();
+}
+
+pub struct WeightToFee;
+impl WeightToFeePolynomial for WeightToFee {
+	type Balance = Balance;
+
+	fn polynomial() -> WeightToFeeCoefficients<Self::Balance> {
+		smallvec!(WeightToFeeCoefficient {
+			coeff_integer: 315000,
+			coeff_frac: Perbill::zero(),
+			negative: false,
+			degree: 1,
+		})
+	}
 }
 
 parameter_types! {
-	pub const TransactionBaseFee: Balance = 0;
 	pub const TransactionByteFee: Balance = 1;
 }
 
-impl transaction_payment::Trait for Runtime {
-	type Currency = balances::Module<Runtime>;
+impl pallet_transaction_payment::Trait for Runtime {
+	type Currency = pallet_balances::Module<Runtime>;
 	type OnTransactionPayment = ();
-	type TransactionBaseFee = TransactionBaseFee;
 	type TransactionByteFee = TransactionByteFee;
-	type WeightToFee = ConvertInto;
+	type WeightToFee = WeightToFee;
 	type FeeMultiplierUpdate = ();
 }
 
-impl sudo::Trait for Runtime {
+impl pallet_sudo::Trait for Runtime {
 	type Event = Event;
 	type Call = Call;
 }
@@ -226,18 +266,17 @@ parameter_types! {
 
 impl chainbridge::Trait for Runtime {
 	type Event = Event;
-	type AdminOrigin = system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = frame_system::EnsureRoot<Self::AccountId>;
 	type Proposal = Call;
 	type ChainId = ChainId;
 	type ProposalLifetime = ProposalLifetime;
 }
 
 parameter_types! {
-    pub const HashId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"hash"));
+    pub HashId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"hash"));
     // Note: Chain ID is 0 indicating this is native to another chain
-    pub const NativeTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(0, &blake2_128(b"DAV"));
-
-    pub const NFTTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"NFT"));
+    pub NativeTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(0, &blake2_128(b"DAV"));
+    pub NFTTokenId: chainbridge::ResourceId = chainbridge::derive_resource_id(1, &blake2_128(b"NFT"));
 }
 
 impl erc721::Trait for Runtime {
@@ -248,7 +287,7 @@ impl erc721::Trait for Runtime {
 impl example::Trait for Runtime {
 	type Event = Event;
 	type BridgeOrigin = chainbridge::EnsureBridge<Runtime>;
-	type Currency = balances::Module<Runtime>;
+	type Currency = pallet_balances::Module<Runtime>;
 	type HashId = HashId;
 	type NativeTokenId = NativeTokenId;
 	type Erc721Id = NFTTokenId;
@@ -260,14 +299,14 @@ construct_runtime!(
 		NodeBlock = opaque::Block,
 		UncheckedExtrinsic = UncheckedExtrinsic
 	{
-		System: system::{Module, Call, Config, Storage, Event<T>},
-		RandomnessCollectiveFlip: randomness_collective_flip::{Module, Call, Storage},
-		Timestamp: timestamp::{Module, Call, Storage, Inherent},
-		Aura: aura::{Module, Config<T>, Inherent(Timestamp)},
-		Grandpa: grandpa::{Module, Call, Storage, Config, Event},
-		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
-		TransactionPayment: transaction_payment::{Module, Storage},
-		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
+		System: frame_system::{Module, Call, Config, Storage, Event<T>},
+		RandomnessCollectiveFlip: pallet_randomness_collective_flip::{Module, Call, Storage},
+		Timestamp: pallet_timestamp::{Module, Call, Storage, Inherent},
+		Aura: pallet_aura::{Module, Config<T>, Inherent},
+		Grandpa: pallet_grandpa::{Module, Call, Storage, Config, Event},
+		Balances: pallet_balances::{Module, Call, Storage, Config<T>, Event<T>},
+		TransactionPayment: pallet_transaction_payment::{Module, Storage},
+		Sudo: pallet_sudo::{Module, Call, Config<T>, Storage, Event<T>},
 		ChainBridge: chainbridge::{Module, Call, Storage, Event<T>},
 		Example: example::{Module, Call, Event<T>},
 		Erc721: erc721::{Module, Call, Storage, Event<T>},
@@ -286,19 +325,20 @@ pub type SignedBlock = generic::SignedBlock<Block>;
 pub type BlockId = generic::BlockId<Block>;
 /// The SignedExtension to the basic transaction logic.
 pub type SignedExtra = (
-	system::CheckVersion<Runtime>,
-	system::CheckGenesis<Runtime>,
-	system::CheckEra<Runtime>,
-	system::CheckNonce<Runtime>,
-	system::CheckWeight<Runtime>,
-	transaction_payment::ChargeTransactionPayment<Runtime>
+	frame_system::CheckSpecVersion<Runtime>,
+	frame_system::CheckTxVersion<Runtime>,
+	frame_system::CheckGenesis<Runtime>,
+	frame_system::CheckEra<Runtime>,
+	frame_system::CheckNonce<Runtime>,
+	frame_system::CheckWeight<Runtime>,
+	pallet_transaction_payment::ChargeTransactionPayment<Runtime>
 );
 /// Unchecked extrinsic type as expected by this runtime.
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
 /// Extrinsic type that has already been checked.
 pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExtra>;
 /// Executive: handles dispatch to the various modules.
-pub type Executive = frame_executive::Executive<Runtime, Block, system::ChainContext<Runtime>, Runtime, AllModules>;
+pub type Executive = frame_executive::Executive<Runtime, Block, frame_system::ChainContext<Runtime>, Runtime, AllModules>;
 
 impl_runtime_apis! {
 	impl sp_api::Core<Block> for Runtime {
@@ -326,10 +366,6 @@ impl_runtime_apis! {
 			Executive::apply_extrinsic(extrinsic)
 		}
 
-		fn apply_trusted_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
-			Executive::apply_trusted_extrinsic(extrinsic)
-		}
-
 		fn finalize_block() -> <Block as BlockT>::Header {
 			Executive::finalize_block()
 		}
@@ -351,8 +387,11 @@ impl_runtime_apis! {
 	}
 
 	impl sp_transaction_pool::runtime_api::TaggedTransactionQueue<Block> for Runtime {
-		fn validate_transaction(tx: <Block as BlockT>::Extrinsic) -> TransactionValidity {
-			Executive::validate_transaction(tx)
+		fn validate_transaction(
+			source: TransactionSource,
+			tx: <Block as BlockT>::Extrinsic,
+		) -> TransactionValidity {
+			Executive::validate_transaction(source, tx)
 		}
 	}
 
@@ -387,6 +426,26 @@ impl_runtime_apis! {
 	impl fg_primitives::GrandpaApi<Block> for Runtime {
 		fn grandpa_authorities() -> GrandpaAuthorityList {
 			Grandpa::grandpa_authorities()
+		}
+
+		fn submit_report_equivocation_unsigned_extrinsic(
+			_equivocation_proof: fg_primitives::EquivocationProof<
+				<Block as BlockT>::Hash,
+				NumberFor<Block>,
+			>,
+			_key_owner_proof: fg_primitives::OpaqueKeyOwnershipProof,
+		) -> Option<()> {
+			None
+		}
+
+		fn generate_key_ownership_proof(
+			_set_id: fg_primitives::SetId,
+			_authority_id: GrandpaId,
+		) -> Option<fg_primitives::OpaqueKeyOwnershipProof> {
+			// NOTE: this is the only implementation possible since we've
+			// defined our key owner proof type as a bottom type (i.e. a type
+			// with no values).
+			None
 		}
 	}
 }
