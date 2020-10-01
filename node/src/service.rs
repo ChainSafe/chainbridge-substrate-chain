@@ -9,7 +9,7 @@ use sp_inherents::InherentDataProviders;
 use sc_executor::native_executor_instance;
 pub use sc_executor::NativeExecutor;
 use sp_consensus_aura::sr25519::{AuthorityPair as AuraPair};
-use grandpa::{FinalityProofProvider as GrandpaFinalityProofProvider, SharedVoterState};
+use sc_finality_grandpa::{FinalityProofProvider as GrandpaFinalityProofProvider, SharedVoterState};
 
 // Our native executor instance.
 native_executor_instance!(
@@ -27,8 +27,8 @@ pub fn new_partial(config: &Configuration) -> Result<sc_service::PartialComponen
 	sp_consensus::DefaultImportQueue<Block, FullClient>,
 	sc_transaction_pool::FullPool<Block, FullClient>,
 	(
-		grandpa::GrandpaBlockImport<FullBackend, Block, FullClient, FullSelectChain>,
-		grandpa::LinkHalf<Block, FullClient, FullSelectChain>
+		sc_finality_grandpa::GrandpaBlockImport<FullBackend, Block, FullClient, FullSelectChain>,
+		sc_finality_grandpa::LinkHalf<Block, FullClient, FullSelectChain>
 	)
 >, ServiceError> {
 	let inherent_data_providers = sp_inherents::InherentDataProviders::new();
@@ -46,7 +46,7 @@ pub fn new_partial(config: &Configuration) -> Result<sc_service::PartialComponen
 		client.clone(),
 	);
 
-	let (grandpa_block_import, grandpa_link) = grandpa::block_import(
+	let (grandpa_block_import, grandpa_link) = sc_finality_grandpa::block_import(
 		client.clone(), &(client.clone() as Arc<_>), select_chain.clone(),
 	)?;
 
@@ -110,6 +110,21 @@ pub fn new_full(config: Configuration) -> Result<TaskManager, ServiceError> {
 	let prometheus_registry = config.prometheus_registry().cloned();
 	let telemetry_connection_sinks = sc_service::TelemetryConnectionSinks::default();
 
+	let rpc_extensions_builder = {
+		let client = client.clone();
+		let pool = transaction_pool.clone();
+
+		Box::new(move |deny_unsafe, _| {
+			let deps = crate::rpc::FullDeps {
+				client: client.clone(),
+				pool: pool.clone(),
+				deny_unsafe,
+			};
+
+			crate::rpc::create_full(deps)
+		})
+	};
+
 	sc_service::spawn_tasks(sc_service::SpawnTasksParams {
 		network: network.clone(),
 		client: client.clone(),
@@ -117,7 +132,7 @@ pub fn new_full(config: Configuration) -> Result<TaskManager, ServiceError> {
 		task_manager: &mut task_manager,
 		transaction_pool: transaction_pool.clone(),
 		telemetry_connection_sinks: telemetry_connection_sinks.clone(),
-		rpc_extensions_builder: Box::new(|_, _| ()),
+		rpc_extensions_builder: rpc_extensions_builder,
 		on_demand: None,
 		remote_blockchain: None,
 		backend, network_status_sinks, system_rpc_tx, config,
@@ -159,7 +174,7 @@ pub fn new_full(config: Configuration) -> Result<TaskManager, ServiceError> {
 		None
 	};
 
-	let grandpa_config = grandpa::Config {
+	let grandpa_config = sc_finality_grandpa::Config {
 		// FIXME #1578 make this available through chainspec
 		gossip_duration: Duration::from_millis(333),
 		justification_period: 512,
@@ -176,13 +191,13 @@ pub fn new_full(config: Configuration) -> Result<TaskManager, ServiceError> {
 		// and vote data availability than the observer. The observer has not
 		// been tested extensively yet and having most nodes in a network run it
 		// could lead to finality stalls.
-		let grandpa_config = grandpa::GrandpaParams {
+		let grandpa_config = sc_finality_grandpa::GrandpaParams {
 			config: grandpa_config,
 			link: grandpa_link,
 			network,
 			inherent_data_providers,
 			telemetry_on_connect: Some(telemetry_connection_sinks.on_connect_stream()),
-			voting_rule: grandpa::VotingRulesBuilder::default().build(),
+			voting_rule: sc_finality_grandpa::VotingRulesBuilder::default().build(),
 			prometheus_registry,
 			shared_voter_state: SharedVoterState::empty(),
 		};
@@ -191,10 +206,10 @@ pub fn new_full(config: Configuration) -> Result<TaskManager, ServiceError> {
 		// if it fails we take down the service with it.
 		task_manager.spawn_essential_handle().spawn_blocking(
 			"grandpa-voter",
-			grandpa::run_grandpa_voter(grandpa_config)?
+			sc_finality_grandpa::run_grandpa_voter(grandpa_config)?
 		);
 	} else {
-		grandpa::setup_disabled_grandpa(
+		sc_finality_grandpa::setup_disabled_grandpa(
 			client,
 			&inherent_data_providers,
 			network,
@@ -218,7 +233,7 @@ pub fn new_light(config: Configuration) -> Result<TaskManager, ServiceError> {
 		on_demand.clone(),
 	));
 
-	let grandpa_block_import = grandpa::light_block_import(
+	let grandpa_block_import = sc_finality_grandpa::light_block_import(
 		client.clone(), backend.clone(), &(client.clone() as Arc<_>),
 		Arc::new(on_demand.checker().clone()) as Arc<_>,
 	)?;
@@ -274,9 +289,9 @@ pub fn new_light(config: Configuration) -> Result<TaskManager, ServiceError> {
 		network,
 		network_status_sinks,
 		system_rpc_tx,
-	})?;
+	 })?;
 
-	network_starter.start_network();
+	 network_starter.start_network();
 
-	Ok(task_manager)
+	 Ok(task_manager)
 }

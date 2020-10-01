@@ -35,18 +35,26 @@ impl SubstrateCli for Cli {
 		env!("CARGO_PKG_DESCRIPTION").into()
 	}
 
-	fn author() -> String { "David Ansermino (ChainSafe)".into() }
+	fn author() -> String {
+		env!("CARGO_PKG_AUTHORS").into()
+	}
 
 	fn support_url() -> String {
-		"n/a".into()
+		"support.anonymous.an".into()
 	}
 
 	fn copyright_start_year() -> i32 {
-		2020
+		2017
 	}
 
 	fn load_spec(&self, id: &str) -> Result<Box<dyn sc_service::ChainSpec>, String> {
-		chain_spec::load_spec(id)
+		Ok(match id {
+			"dev" => Box::new(chain_spec::development_config()?),
+			"" | "local" => Box::new(chain_spec::local_testnet_config()?),
+			path => Box::new(chain_spec::ChainSpec::from_json_file(
+				std::path::PathBuf::from(path),
+			)?),
+		})
 	}
 
 	fn native_runtime_version(_: &Box<dyn ChainSpec>) -> &'static RuntimeVersion {
