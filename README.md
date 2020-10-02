@@ -12,17 +12,23 @@ You will need to add these definitions to the developer settings:
 
 ```json
 {
-  "bridge::ChainId": "u8",
+  "chainbridge::ChainId": "u8",
   "ChainId": "u8",
-  "ResourceId": "Hash",
+  "ResourceId": "[u8; 32]",
   "DepositNonce": "u64",
   "ProposalVotes": {
     "votes_for": "Vec<AccountId>",
     "votes_against": "Vec<AccountId>",
     "status": "enum"
   },
+  "Erc721Token": {
+    "id": "TokenId",
+    "metadata": "Vec<u8>"
+  },
   "TokenId": "U256",
-  "Address": "AccountId"
+  "Address": "AccountId",
+  "LookupSource": "AccountId",
+  "RefCount": "RefCountTo259"
 }
 ```
 

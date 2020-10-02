@@ -3,8 +3,8 @@ authors = ['Substrate DevHub <https://github.com/substrate-developer-hub>']
 edition = '2018'
 homepage = 'https://substrate.dev'
 license = 'Unlicense'
-name = 'node-template-runtime'
-repository = 'https://github.com/substrate-developer-hub/substrate-node-template/'
+name = 'chainbridge-substrate-chain-runtime'
+repository = 'https://github.com/ChainSafe/chainbridge-substrate-chain'
 version = '2.0.0-rc6'
 
 [package.metadata.docs.rs]
@@ -19,73 +19,73 @@ version = '1.3.4'
 [dependencies.frame-executive]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.frame-support]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.frame-system]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.frame-system-rpc-runtime-api]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-aura]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-balances]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-grandpa]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-randomness-collective-flip]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-sudo]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-timestamp]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-transaction-payment]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.pallet-transaction-payment-rpc-runtime-api]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.serde]
@@ -96,73 +96,73 @@ version = '1.0.101'
 [dependencies.sp-api]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-block-builder]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-consensus-aura]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '0.8.0-rc6'
 
 [dependencies.sp-core]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-inherents]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-io]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-offchain]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-runtime]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-session]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-std]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-transaction-pool]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.sp-version]
 default-features = false
 git = 'https://github.com/paritytech/substrate.git'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '2.0.0-rc6'
 
 [dependencies.chainbridge]
@@ -213,12 +213,12 @@ std = [
     'sp-transaction-pool/std',
     'sp-version/std',
     'chainbridge/std',
-    'example/std',
-    'erc721/std',
+#    'erc721/std',
+#    'example/std',
 ]
 
 [build-dependencies.wasm-builder-runner]
 git = 'https://github.com/paritytech/substrate.git'
 package = 'substrate-wasm-builder-runner'
-tag = 'v2.0.0-rc6'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
 version = '1.0.5'
