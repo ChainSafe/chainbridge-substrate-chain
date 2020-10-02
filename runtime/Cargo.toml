@@ -213,8 +213,8 @@ std = [
     'sp-transaction-pool/std',
     'sp-version/std',
     'chainbridge/std',
-#    'erc721/std',
-#    'example/std',
+    'erc721/std',
+    'example/std',
 ]
 
 [build-dependencies.wasm-builder-runner]
