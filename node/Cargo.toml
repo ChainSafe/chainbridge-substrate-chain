@@ -1,112 +1,146 @@
-[build-dependencies]
-vergen = '3.0.4'
-
-[build-dependencies.build-script-utils]
-git = 'https://github.com/paritytech/substrate.git'
-package = 'substrate-build-script-utils'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
-
 [package]
-authors = ['Anonymous']
+authors = ['david@chainsafe.io']
 build = 'build.rs'
 edition = '2018'
 homepage = 'https://substrate.dev'
 license = 'Unlicense'
 name = 'chainbridge-substrate-chain'
 repository = 'https://github.com/ChainSafe/chainbridge-substrate-chain'
-version = '2.0.0-alpha.3'
+version = '2.0.0-rc6'
+
+[package.metadata.docs.rs]
+targets = ['x86_64-unknown-linux-gnu']
 
 [[bin]]
 name = 'chainbridge-substrate-chain'
 
-[dependencies]
-futures = '0.3.1'
-log = '0.4.8'
-structopt = '0.3.8'
-
-[dependencies.grandpa]
-git = 'https://github.com/paritytech/substrate.git'
-package = 'sc-finality-grandpa'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
-
-[dependencies.grandpa-primitives]
-git = 'https://github.com/paritytech/substrate.git'
-package = 'sp-finality-grandpa'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
-
-[dependencies.node-template-runtime]
+[dependencies.chainbridge-substrate-chain-runtime]
 path = '../runtime'
-version = '2.0.0-alpha.3'
+version = '2.0.0-rc6'
+
+[dependencies.pallet-transaction-payment-rpc]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sc-basic-authorship]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sc-cli]
+features = ['wasmtime']
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
-[dependencies.sc-client]
+[dependencies.sc-client-api]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.sc-consensus]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sc-consensus-aura]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sc-executor]
+features = ['wasmtime']
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
-[dependencies.sc-network]
+[dependencies.sc-finality-grandpa]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
+
+[dependencies.sc-rpc]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.sc-rpc-api]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sc-service]
+features = ['wasmtime']
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sc-transaction-pool]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.sp-api]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.sp-block-builder]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.sp-blockchain]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-consensus]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sp-consensus-aura]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '0.8.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '0.8.0-rc6'
 
 [dependencies.sp-core]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.sp-finality-grandpa]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-inherents]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-runtime]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
 
 [dependencies.sp-transaction-pool]
 git = 'https://github.com/paritytech/substrate.git'
-rev = '013c1ee167354a08283fb69915fda56a62fee943'
-version = '2.0.0-alpha.3'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies.substrate-frame-rpc-system]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
+
+[dependencies]
+jsonrpc-core = '14.0.3'
+structopt = '0.3.8'
+
+[build-dependencies.substrate-build-script-utils]
+git = 'https://github.com/paritytech/substrate.git'
+rev = 'be8bb186d87b9d2b47a2907c9b51ae1e252362c3'
+version = '2.0.0-rc6'
