@@ -9,6 +9,7 @@ cache: cargo
 env:
   global:
     - RUST_BACKTRACE=1
+    - IMAGE_NAME="chainsafe/chainbridge-substrate-chain"
 
 before_install:
   - df -h
@@ -18,7 +19,7 @@ jobs:
     - stage: "Build"
       name: Build (WASM and native)
       script:
-        - RUST_TOOLCHAIN=nightly-2020-08-16 TARGET=build-client travis_wait 180 ./scripts/ci.sh
+        - docker build -t $IMAGE_NAME:latest .
       deploy:
         - provider: script
           script: TARGET=default ./scripts/ci_docker.sh
