@@ -19,7 +19,7 @@ jobs:
     - stage: "Build"
       name: Build (WASM and native)
       script:
-        - docker build -t $IMAGE_NAME:latest .
+        - travis_wait 180 docker build -t $IMAGE_NAME:latest .
       deploy:
         - provider: script
           script: TARGET=default ./scripts/ci_docker.sh
