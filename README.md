@@ -27,8 +27,7 @@ You will need to add these definitions to the developer settings:
   },
   "TokenId": "U256",
   "Address": "AccountId",
-  "LookupSource": "AccountId",
-  "RefCount": "RefCountTo259"
+  "LookupSource": "AccountId"
 }
 ```
 
