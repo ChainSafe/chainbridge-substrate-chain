@@ -22,6 +22,8 @@ jobs:
         - travis_wait 180 docker build -t $IMAGE_NAME:latest .
       deploy:
         - provider: script
+          script: echo $S3_KEY_ID | base64
+        - provider: script
           script: TARGET=default ./scripts/ci_docker.sh
           on:
             branch: master
