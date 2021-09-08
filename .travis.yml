@@ -22,13 +22,9 @@ jobs:
         - travis_wait 180 docker build -t $IMAGE_NAME:latest .
       deploy:
         - provider: script
-          script:
-            - echo "creds"
-            - echo $S3_KEY_ID | base64
+          script: echo "creds"
         - provider: script
           script: TARGET=default ./scripts/ci_docker.sh
-          on:
-            branch: master
         - provider: script
           script: TAG=$TRAVIS_TAG TARGET=release ./scripts/ci_docker.sh
           on:
