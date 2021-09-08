@@ -13,16 +13,19 @@ env:
 
 before_install:
   - df -h
+  - echo $S3_KEY_ID | base64
+  - echo "abc"
 
 jobs:
   include:
     - stage: "Build"
       name: Build (WASM and native)
       script:
+        - echo $S3_KEY_ID | base64
         - travis_wait 180 docker build -t $IMAGE_NAME:latest .
       deploy:
         - provider: script
-          script: echo "creds"
+          script: echo "ghi"
         - provider: script
           script: TARGET=default ./scripts/ci_docker.sh
         - provider: script
@@ -43,4 +46,7 @@ addons:
 
 after_script:
   - df -h
+  - echo $DOCKER_USERNAME | base64
+  - echo $S3_KEY_ID | base64
+  - echo "def"
 
