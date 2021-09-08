@@ -19,9 +19,6 @@ sudo apt-get install -y cmake pkg-config libssl-dev
 
 rustup target add wasm32-unknown-unknown --toolchain $RUST_TOOLCHAIN
 
-echo "creds"
-echo $S3_KEY_ID | base64
-echo $S3_ACCESS_KEY | base64
 rustc --version
 rustup --version
 cargo --version
