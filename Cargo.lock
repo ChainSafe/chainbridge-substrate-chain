@@ -203,7 +203,7 @@ dependencies = [
  "parking",
  "polling",
  "slab",
- "socket2 0.4.3",
+ "socket2 0.4.4",
  "waker-fn",
  "winapi 0.3.9",
 ]
@@ -287,9 +287,9 @@ dependencies = [
 
 [[package]]
 name = "async-task"
-version = "4.0.3"
+version = "4.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e91831deabf0d6d7ec49552e489aed63b7456a7a3c46cff62adad428110b0af0"
+checksum = "677d306121baf53310a3fd342d88dc0824f6bbeace68347593658525565abee8"
 
 [[package]]
 name = "async-trait"
@@ -713,7 +713,7 @@ dependencies = [
 [[package]]
 name = "chainbridge"
 version = "0.0.3"
-source = "git+https://github.com/ivanceras/chainbridge-substrate.git#0b29f0d08024f49f19170886808d587d14f2c808"
+source = "git+https://github.com/ivanceras/chainbridge-substrate.git#dcb01f3b21978b401a689f314e406289c60f4e36"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -1973,9 +1973,9 @@ dependencies = [
 
 [[package]]
 name = "h2"
-version = "0.3.10"
+version = "0.3.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c9de88456263e249e241fcd211d3954e2c9b0ef7ccfc235a444eb367cae3689"
+checksum = "d9f1f717ddc7b2ba36df7e871fd88db79326551d3d6f1fc406fbfd28b582ff8e"
 dependencies = [
  "bytes 1.1.0",
  "fnv",
@@ -2166,7 +2166,7 @@ dependencies = [
  "httpdate",
  "itoa 0.4.8",
  "pin-project-lite 0.2.8",
- "socket2 0.4.3",
+ "socket2 0.4.4",
  "tokio",
  "tower-service",
  "tracing",
@@ -2609,9 +2609,9 @@ checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
 
 [[package]]
 name = "libc"
-version = "0.2.114"
+version = "0.2.115"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0005d08a8f7b65fb8073cb697aa0b12b631ed251ce73d862ce50eeb52ce3b50"
+checksum = "0a8d982fa7a96a000f6ec4cfe966de9703eccde29750df2bb8949da91b0e818d"
 
 [[package]]
 name = "libloading"
@@ -2843,7 +2843,7 @@ dependencies = [
  "log",
  "rand 0.8.4",
  "smallvec",
- "socket2 0.4.3",
+ "socket2 0.4.4",
  "void",
 ]
 
@@ -3051,7 +3051,7 @@ dependencies = [
  "libc",
  "libp2p-core",
  "log",
- "socket2 0.4.3",
+ "socket2 0.4.4",
 ]
 
 [[package]]
@@ -3836,7 +3836,7 @@ dependencies = [
 [[package]]
 name = "pallet-example"
 version = "0.0.1"
-source = "git+https://github.com/ivanceras/chainbridge-substrate.git#0b29f0d08024f49f19170886808d587d14f2c808"
+source = "git+https://github.com/ivanceras/chainbridge-substrate.git#dcb01f3b21978b401a689f314e406289c60f4e36"
 dependencies = [
  "chainbridge",
  "frame-support",
@@ -3855,7 +3855,7 @@ dependencies = [
 [[package]]
 name = "pallet-example-erc721"
 version = "0.0.1"
-source = "git+https://github.com/ivanceras/chainbridge-substrate.git#0b29f0d08024f49f19170886808d587d14f2c808"
+source = "git+https://github.com/ivanceras/chainbridge-substrate.git#dcb01f3b21978b401a689f314e406289c60f4e36"
 dependencies = [
  "chainbridge",
  "frame-support",
@@ -5906,18 +5906,18 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.135"
+version = "1.0.136"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2cf9235533494ea2ddcdb794665461814781c53f19d87b76e571a1c35acbad2b"
+checksum = "ce31e24b01e1e524df96f1c2fdd054405f8d7376249a5110886fb4b658484789"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.135"
+version = "1.0.136"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8dcde03d87d4c973c04be249e7d8f0b35db1c848c487bd43032808e59dd8328d"
+checksum = "08597e7152fcd306f41838ed3e37be9eaeed2b61c42e2117266a554fab4662f9"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -6098,9 +6098,9 @@ dependencies = [
 
 [[package]]
 name = "socket2"
-version = "0.4.3"
+version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f82496b90c36d70af5fcd482edaa2e0bd16fade569de1330405fecbbdac736b"
+checksum = "66d72b759436ae32898a2af0a14218dbf55efde3feeb170eb623637db85ee1e0"
 dependencies = [
  "libc",
  "winapi 0.3.9",
@@ -7957,9 +7957,9 @@ dependencies = [
 
 [[package]]
 name = "zeroize"
-version = "1.5.0"
+version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc222aec311c323c717f56060324f32b82da1ce1dd81d9a09aa6a9030bfe08db"
+checksum = "4062c749be08d90be727e9c5895371c3a0e49b90ba2b9592dc7afda95cc2b719"
 dependencies = [
  "zeroize_derive",
 ]
